@@ -3,10 +3,9 @@
 A from-scratch retrieval-augmented generation (RAG) pipeline built while learning AI engineering. It turns a folder of Markdown notes into a searchable index and answers questions about them with a local LLM, so your notes never leave your machine.
 
 ```
-Markdown notes ──► chunk ──► embed ──► corpus.json + vectors.npy
-                                              │
-          question ──► dense search ─┐        │
-                   └─► BM25 search ──┴─► RRF fusion ──► top-k passages ──► local LLM ──► cited answer
+index time    notes → chunk → embed → normalize → store
+query time    query → embed → dense search ─┐
+                   → BM25 ──────────────────┴→ RRF → top-k → prompt → LLM
 ```
 
 ## What's inside
