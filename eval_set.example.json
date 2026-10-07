@@ -1,0 +1,5 @@
+[
+  {"q": "what did I plan for the product launch", "expect": "Launch plan.md"},
+  {"q": "how did the trip to the mountains go", "expect": "Mountain trip.md"},
+  {"q": "what books did I want to read this year", "expect": "Reading list.md"}
+]
