@@ -171,7 +171,7 @@ def report(name: str, chunks: list[str]) -> None:
 
 
 import os
-Vault = Path(os.environ.get("VAULT_PATH", "notes")).expanduser()
+Vault = Path(os.getenv("VAULT_PATH", "./sample_vault")).expanduser()
 files = list(Vault.rglob("*.md"))
 import numpy as np
 import json
@@ -190,8 +190,9 @@ def get_file(files: list[Path]):
             print(f"{count}. --- File {f.name} is empty")
         count += 1
 
-def build_corpus(files: list[Path]) -> list[dict]:
+def build_corpus(files: list[Path], min_tokens: int = 30) -> list[dict]:
     corpus = []
+    dropped = 0
     for f in files:
         text = f.read_text(encoding="utf-8")
         if not text.strip():
@@ -199,11 +200,15 @@ def build_corpus(files: list[Path]) -> list[dict]:
         chunks = enforce_limit(chunk_recursive(text, size=800), max_tokens=250)
         # print(f"File {f.name} has {len(chunks)} chunks ---------", "\n")
         for i, chunk in enumerate(chunks):
+            if len(enc.encode(chunk)) < min_tokens:
+                dropped += 1
+                continue
             corpus.append({
                 "text": chunk,
                 "source": f.name,
                 "position":i
             })
+    print(f"dropped {dropped} chunks under {min_tokens} tokens")
     print("total number of chunks in corpus:", len(corpus))
     # print(corpus[0])
     return corpus
@@ -215,7 +220,11 @@ def embed_corpus(corpus: list[dict]) -> np.ndarray:
 
 
 if __name__ == "__main__":
+    if not files:
+        raise SystemExit(f"No .md files found in {Vault}: set VAULT_PATH to your notes folder")
     corpus = build_corpus(files)
+    if not corpus:
+        raise SystemExit("No chunks left to index: notes are empty or all under min_tokens")
     vectors = embed_corpus(corpus)
     np.save("vectors.npy", vectors)
     with open("corpus.json", "w") as fh:

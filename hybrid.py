@@ -1,9 +1,17 @@
 # hybrid.py
+import re
+
 import numpy as np
 from rank_bm25 import BM25Okapi
 from search import corpus, vectors, model
 
-tokenized = [c["text"].lower().split() for c in corpus]
+
+def tok(text: str) -> list[str]:
+    """Lowercase alphanumeric runs; punctuation is dropped. Used for both corpus and query."""
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+tokenized = [tok(c["text"]) for c in corpus]
 bm25 = BM25Okapi(tokenized)
 
 
@@ -14,7 +22,7 @@ def dense_indices(query: str, k: int = 20) -> list[int]:
 
 
 def bm25_indices(query: str, k: int = 20) -> list[int]:
-    scores = bm25.get_scores(query.lower().split())
+    scores = bm25.get_scores(tok(query))
     return list(np.argsort(-scores)[:k])
 
 
