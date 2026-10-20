@@ -220,7 +220,11 @@ def embed_corpus(corpus: list[dict]) -> np.ndarray:
 
 
 if __name__ == "__main__":
+    if not files:
+        raise SystemExit(f"No .md files found in {Vault}: set VAULT_PATH to your notes folder")
     corpus = build_corpus(files)
+    if not corpus:
+        raise SystemExit("No chunks left to index: notes are empty or all under min_tokens")
     vectors = embed_corpus(corpus)
     np.save("vectors.npy", vectors)
     with open("corpus.json", "w") as fh:
