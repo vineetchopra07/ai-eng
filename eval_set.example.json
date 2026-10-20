@@ -1,5 +1,38 @@
 [
-  {"q": "what did I plan for the product launch", "expect": "Launch plan.md"},
-  {"q": "how did the trip to the mountains go", "expect": "Mountain trip.md"},
-  {"q": "what books did I want to read this year", "expect": "Reading list.md"}
+  {
+    "q": "How does the Transformer model handle word order without recurrence?",
+    "expect": "attention-is-all-you-need.md"
+  },
+  {
+    "q": "What is multi-head attention and why is it used?",
+    "expect": "attention-is-all-you-need.md"
+  },
+  {
+    "q": "How does RAG combine retrieval with text generation?",
+    "expect": "rag-retrieval-augmented-generation.md"
+  },
+  {
+    "q": "What is the difference between RAG-Sequence and RAG-Token?",
+    "expect": "rag-retrieval-augmented-generation.md"
+  },
+  {
+    "q": "Why is Sentence-BERT faster than using BERT cross-encoder for similarity search?",
+    "expect": "sentence-bert.md"
+  },
+  {
+    "q": "What pooling strategy works best for sentence embeddings?",
+    "expect": "sentence-bert.md"
+  },
+  {
+    "q": "What does the k1 parameter control in BM25?",
+    "expect": "bm25-ranking.md"
+  },
+  {
+    "q": "Why does BM25 fail when the query uses synonyms?",
+    "expect": "bm25-ranking.md"
+  },
+  {
+    "q": "How are BM25 and dense retrieval combined in hybrid search?",
+    "expect": "bm25-ranking.md"
+  }
 ]

@@ -171,7 +171,7 @@ def report(name: str, chunks: list[str]) -> None:
 
 
 import os
-Vault = Path(os.environ.get("VAULT_PATH", "notes")).expanduser()
+Vault = Path(os.getenv("VAULT_PATH", "./sample_vault")).expanduser()
 files = list(Vault.rglob("*.md"))
 import numpy as np
 import json
