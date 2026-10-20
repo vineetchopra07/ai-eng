@@ -1,5 +1,5 @@
 tiktoken
-sentence-transformers
+sentence-transformers>=3.0
 numpy
 rank-bm25
 ollama
