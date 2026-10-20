@@ -11,7 +11,7 @@ if not EVAL_FILE.exists():
 EVAL = json.loads(EVAL_FILE.read_text(encoding="utf-8"))
 
 from hybrid import hybrid_search
-def evaluate(retriever=search, k=10):
+def evaluate(retriever=search, k=5):
     hits_count = 0
     for e in EVAL:
         sources = [c["source"] for _, c in retriever(e["q"], k)]
